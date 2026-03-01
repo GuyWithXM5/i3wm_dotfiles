@@ -4,7 +4,10 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 
 ## Screenshot
 
-*Add a screenshot of your desktop here if desired.*
+![home screen](screenshot/home.png)
+![](screenshot/home1.png)
+![](screenshot/terminal.png)
+
 
 ---
 
@@ -13,7 +16,7 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | Component | Description |
 |-----------|-------------|
 | **Window Manager** | i3 (with gaps) |
-| **Status Bar** | EWW (ElKowar's Wacky Widgets) |
+| **Status Bar** | EWW |
 | **App Launcher** | Rofi |
 | **Terminal** | Alacritty |
 | **Compositor** | Picom (animations, blur, rounded corners) |
@@ -73,17 +76,6 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | `exo` | Thunar "Open Terminal Here" (exo-open) |
 | `ly` | Display manager (TUI login; optional alternative to SDDM/GDM) |
 
-### Rofi Power Menu
-
-The polybar config references `rofi-powermenu`. Create a symlink so it uses the custom power menu:
-
-```bash
-sudo ln -sf ~/.config/rofi/scripts/power-menu.sh /usr/local/bin/rofi-powermenu
-```
-
-Or add to your PATH and ensure the script is executable.
-
----
 
 ## Installation
 
@@ -98,12 +90,9 @@ cd ~/dotfiles
 
 ```bash
 # Core packages
-sudo pacman -S i3 i3lock dex xss-lock network-manager-applet alacritty rofi \
+sudo pacman -S i3 i3lock xss-lock network-manager-applet alacritty rofi \
   picom feh thunar flameshot brightnessctl pulseaudio pulseaudio-alsa jq \
   ttf-jetbrains-mono-nerd ttf-fira-sans ttf-font-awesome papirus-icon-theme adw-gtk3
-
-# EWW
-FOLLOW INSTRUCTIONS ACCORDING TO DOCUMENTATION https://github.com/elkowar/eww
 
 # Autotiling (from AUR)
 yay -S autotiling
@@ -139,21 +128,7 @@ cd ~/dotfiles
 stow -t ~ .
 ```
 
-### 5. Pywal setup (for Rofi theming)
-
-Rofi uses pywal-generated colors. Create the template:
-
-```bash
-mkdir -p ~/.config/wal/templates
-```
-
-Create `~/.config/wal/templates/colors-rofi-pywal.rasi` with pywal-compatible variables (see [pywal wiki](https://github.com/dylanaraps/pywal/wiki/User-Template-Files)). Then run:
-
-```bash
-wal -i /path/to/your/wallpaper.jpg
-```
-
-### 6. Wallpaper and feh
+### 5. Wallpaper and feh
 
 Set a wallpaper and generate the blurred version for Rofi:
 
@@ -165,14 +140,14 @@ feh --bg-fill /path/to/wallpaper.jpg
 ~/.config/scripts/change_wallpaper.sh /path/to/wallpaper.jpg
 ```
 
-### 7. Power menu symlink
+### 6. Power menu symlink
 
 ```bash
 sudo ln -sf ~/.config/rofi/scripts/power-menu.sh /usr/local/bin/rofi-powermenu
 chmod +x ~/.config/rofi/scripts/power-menu.sh
 ```
 
-### 8. Zsh setup (Powerlevel10k)
+### 7. Zsh setup (Powerlevel10k)
 
 On first login with zsh, Zinit will auto-install. Then run:
 
@@ -180,7 +155,7 @@ On first login with zsh, Zinit will auto-install. Then run:
 p10k configure
 ```
 
-### 9. Select i3 at login
+### 8. Select i3 at login
 
 Log out and choose **i3** (or i3 with Xorg) from your display manager.
 
@@ -188,7 +163,7 @@ Log out and choose **i3** (or i3 with Xorg) from your display manager.
 
 ## Ly Display Manager Setup
 
-[Ly](https://codeberg.org/fairyglade/ly) is a lightweight TUI display manager that works well with i3. Your dotfiles already include `brightnessctl`, which Ly uses for **F5** (brightness down) and **F6** (brightness up) on the login screen.
+[Ly](https://codeberg.org/fairyglade/ly) is a lightweight TUI display manager that works well with i3.
 
 ### Install Ly
 
@@ -261,7 +236,6 @@ dotfiles/
 │   ├── rofi/              # App launcher + power menu
 │   ├── picom/             # Compositor
 │   ├── alacritty/         # Terminal
-│   ├── polybar/           # Alternative bar (optional)
 │   ├── scripts/           # volume.sh, change_wallpaper.sh
 │   ├── neofetch/
 │   ├── btop/
@@ -275,7 +249,7 @@ dotfiles/
 
 ## Customization
 
-- **Colors:** Edit `~/.config/polybar/colors.ini` for polybar. EWW uses `eww.scss`.
+- **Colors:** Edit `eww.scss` for EWW or `~/.config/polybar/colors.ini` for polybar.
 - **Rofi:** Edit `~/.config/rofi/config.rasi` and `power-menu.rasi`.
 - **i3 gaps:** Adjust `gaps inner` and `gaps outer` in `~/.config/i3/config`.
 - **Fonts:** Alacritty uses JetBrains Mono Nerd Font; change in `alacritty.toml`.
@@ -297,12 +271,18 @@ dotfiles/
 - Install `pulseaudio` and `pulseaudio-alsa`.
 - Ensure `~/.config/scripts/volume.sh` is executable.
 
-### Polybar vs EWW
-- i3 currently uses **EWW** (`launch_bar`). Polybar is configured but commented out.
-- To use Polybar instead, comment the eww line and uncomment the polybar line in i3 config.
+---
+
+## Inspiration & References
+
+- **[saimoomedits/eww-widgets](https://github.com/Saimoomedits/eww-widgets)** — EWW bar and widgets
+- **[dreamsofautonomy/zensh](https://github.com/dreamsofautonomy/zensh)** — Zsh configuration
+- **[Unixporn Dots](https://unixporn-dots.github.io/)** — Community dotfiles collection
 
 ---
 
-## License
+## Upcoming
 
-MIT
+- **Music player widget** — EWW-based music player widget (in progress)
+
+---
