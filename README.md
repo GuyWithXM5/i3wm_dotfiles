@@ -4,9 +4,9 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 
 ## Screenshot
 
-![home screen](screenshot/home.png)
-![](screenshot/home1.png)
-![](screenshot/terminal.png)
+![home screen](screenshots/home.png)
+![](screenshots/home1.png)
+![](screenshots/terminal.png)
 
 
 ---
