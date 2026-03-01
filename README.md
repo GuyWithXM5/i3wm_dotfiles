@@ -34,7 +34,6 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 |---------|---------|
 | `i3` | Window manager |
 | `i3lock` | Screen lock |
-| `dex` | XDG autostart for i3 |
 | `xss-lock` | Lock screen before suspend |
 | `network-manager-applet` | System tray network manager |
 | `alacritty` | Terminal emulator |
