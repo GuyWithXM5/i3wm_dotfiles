@@ -1,0 +1,113 @@
+#!/bin/sh
+workspaces() {
+ws1="1"
+ws2="2"
+ws3="3"
+ws4="4"
+ws5="5"
+ws6="6"
+
+# Get all workspaces info
+workspace_info=$(i3-msg -t get_workspaces)
+
+# Get tree to check for windows in each workspace
+tree_info=$(i3-msg -t get_tree)
+
+# Check if workspace has windows (nodes)
+# We check if the workspace exists AND has nodes (windows)
+o1=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 1) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+o2=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 2) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+o3=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 3) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+o4=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 4) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+o5=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 5) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+o6=$(echo "$tree_info" | jq -r '.. | select(.type? == "workspace" and .num? == 6) | select((.nodes | length) > 0 or (.floating_nodes | length) > 0) | .num' 2>/dev/null)
+
+# Check if Focused
+f1=$(echo "$workspace_info" | jq -r '.[] | select(.num==1 and .focused==true) | .num' 2>/dev/null)
+f2=$(echo "$workspace_info" | jq -r '.[] | select(.num==2 and .focused==true) | .num' 2>/dev/null)
+f3=$(echo "$workspace_info" | jq -r '.[] | select(.num==3 and .focused==true) | .num' 2>/dev/null)
+f4=$(echo "$workspace_info" | jq -r '.[] | select(.num==4 and .focused==true) | .num' 2>/dev/null)
+f5=$(echo "$workspace_info" | jq -r '.[] | select(.num==5 and .focused==true) | .num' 2>/dev/null)
+f6=$(echo "$workspace_info" | jq -r '.[] | select(.num==6 and .focused==true) | .num' 2>/dev/null)
+
+# Set icons
+ic_1=""
+ic_1=""
+ic_2=""
+ic_3=""
+ic_4=""
+ic_5=""
+ic_6=""
+if [ $f1 ]; then
+    ic_1=""
+elif [ $f2 ]; then
+    ic_2=""
+elif [ $f3 ]; then
+    ic_3=""
+elif [ $f4 ]; then
+    ic_4=""
+elif [ $f5 ]; then
+    ic_5=""
+elif [ $f6 ]; then
+    ic_6=""
+fi
+
+# Determine class names
+# Focused takes priority over occupied
+if [ "$f1" ]; then
+    class1="ws-focused"
+elif [ "$o1" ]; then
+    class1="ws-occupied"
+else
+    class1="ws-empty"
+fi
+
+if [ "$f2" ]; then
+    class2="ws-focused"
+elif [ "$o2" ]; then
+    class2="ws-occupied"
+else
+    class2="ws-empty"
+fi
+
+if [ "$f3" ]; then
+    class3="ws-focused"
+elif [ "$o3" ]; then
+    class3="ws-occupied"
+else
+    class3="ws-empty"
+fi
+
+if [ "$f4" ]; then
+    class4="ws-focused"
+elif [ "$o4" ]; then
+    class4="ws-occupied"
+else
+    class4="ws-empty"
+fi
+
+if [ "$f5" ]; then
+    class5="ws-focused"
+elif [ "$o5" ]; then
+    class5="ws-occupied"
+else
+    class5="ws-empty"
+fi
+
+if [ "$f6" ]; then
+    class6="ws-focused"
+elif [ "$o6" ]; then
+    class6="ws-occupied"
+else
+    class6="ws-empty"
+fi
+
+echo 	"(box	:class \"works\"	:orientation \"h\" :spacing 5 :space-evenly \"false\" (button :onclick \"i3-msg workspace number $ws1\"	:class	\"$class1\"	\"$ic_1\") (button :onclick \"i3-msg workspace number $ws2\"	:class \"$class2\"	\"$ic_2\") (button :onclick \"i3-msg workspace number $ws3\"	:class \"$class3\" \"$ic_3\") (button :onclick \"i3-msg workspace number $ws4\"	:class \"$class4\"	\"$ic_4\") (button :onclick \"i3-msg workspace number $ws5\"	:class \"$class5\" \"$ic_5\")  (button :onclick \"i3-msg workspace number $ws6\"	:class \"$class6\" \"$ic_6\"))"
+}
+
+workspaces
+
+# Subscribe to i3 events - listen for workspace, window, and binding events
+i3-msg -t subscribe -m '["workspace","window"]' | while read -r _ ; do
+    workspaces
+done

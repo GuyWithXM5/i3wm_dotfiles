@@ -1,0 +1,8 @@
+#!/bin/sh
+# Output volume percentage (0-100). Always prints a number for eww label.
+out=$(amixer -D pulse sget Master 2>/dev/null | grep -oE '[0-9]+%' | head -1 | tr -d '%')
+if [ -n "$out" ]; then
+	echo "${out}%"
+else
+	echo "0%"
+fi

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Open nmtui in a terminal, preferably floating.
+# For i3: add to config: for_window [app_id="nmtui"] floating enable
+# (works with foot). For kitty: for_window [class="nmtui"] floating enable
+
+if command -v foot >/dev/null 2>&1; then
+  exec foot -a nmtui nmtui
+elif command -v kitty >/dev/null 2>&1; then
+  exec kitty --class nmtui -e nmtui
+else
+  exec "${TERMINAL:-xterm}" -e nmtui
+fi

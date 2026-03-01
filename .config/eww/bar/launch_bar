@@ -1,0 +1,27 @@
+#!/bin/bash
+## Files and cmd
+FILE="$HOME/.cache/eww_launch.xyz"
+EWW="/usr/local/bin/eww -c $HOME/.config/eww/bar"
+
+# start daemon if not running
+if ! pgrep -x eww >/dev/null; then
+    ${EWW} daemon
+    sleep 1
+fi
+
+run_eww() {
+    ${EWW} open-many bar
+}
+
+# Check if bar is already open
+if ${EWW} list-windows | grep -q "\*bar"; then
+    # Bar is already open, do nothing (prevents closing on i3 reload)
+    exit 0
+else
+    # Bar is not open, open it and create lock file
+    touch "$FILE"
+    run_eww
+    # Set volume_percent once from script (no polling)
+    ${EWW} update volume_percent="$(~/.config/eww/bar/scripts/get_volume)"
+    ${EWW} update brightness="$(~/.config/eww/bar/scripts/get_brightness)"
+fi

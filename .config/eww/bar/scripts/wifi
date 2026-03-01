@@ -1,0 +1,38 @@
+#!/bin/bash
+# Interface-agnostic wifi status for eww bar.
+# --COL: color for icon
+# --ESSID: current network name (empty if disconnected)
+# --ICON: icon name
+# --DETAILS: multi-line tooltip (SSID, status)
+
+state=$(nmcli -t -f state g 2>/dev/null)
+# Get active connection's name and type (wifi vs wired)
+active=$(nmcli -t -f name,type connection show --active 2>/dev/null | grep -E ':wifi|:802-11-wireless' | head -1)
+essid=""
+if [ -n "$active" ]; then
+  name="${active%:*}"   # connection name (before last ':')
+  essid=$(nmcli -t -f 802-11-wireless.ssid connection show "$name" 2>/dev/null | cut -d: -f2-)
+  [ -z "$essid" ] && essid="$name"
+fi
+
+if [ "$state" = "connected" ] && [ -n "$essid" ]; then
+  icon=$'\ue06a'   # Nerd Font wifi
+  col="#a1bdce"
+else
+  icon=$'\ue10a'   # Nerd Font wifi off
+  col="#575268"
+fi
+
+case "${1:-}" in
+  --COL)   echo "$col" ;;
+  --ESSID) echo "$essid" ;;
+  --ICON)  echo "$icon" ;;
+  --DETAILS)
+    if [ -n "$essid" ]; then
+      echo "SSID: $essid  •  Connected"
+    else
+      echo "Disconnected"
+    fi
+    ;;
+  *) echo "$essid" ;;
+esac
