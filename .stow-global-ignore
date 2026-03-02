@@ -1,2 +1,5 @@
-screenshots
-
+screenshots/
+.git/
+README.md
+.gitignore
+install.sh
