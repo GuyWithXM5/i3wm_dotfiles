@@ -1,5 +1,5 @@
 screenshots/*
-.git/
 README.md
-.gitignore
 install.sh
+\.git
+\.gitignore
