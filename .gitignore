@@ -3,3 +3,4 @@
 .config/mozilla
 .config/go
 .config/gh
+.config/dconf/user
