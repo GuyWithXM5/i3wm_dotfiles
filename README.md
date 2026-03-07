@@ -7,7 +7,7 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 ![home screen](screenshots/home.png)
 ![](screenshots/home1.png)
 ![](screenshots/terminal.png)
-
+![](screenshots/sc.png)
 
 ---
 
