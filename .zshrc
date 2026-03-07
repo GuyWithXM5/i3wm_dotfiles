@@ -75,3 +75,6 @@ alias ls='ls -a --color'
 
 # Shell integrations
 eval "$(fzf --zsh)"
+
+#exports
+export PATH="$HOME/.local/bin:$PATH"
