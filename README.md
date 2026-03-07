@@ -272,6 +272,10 @@ dotfiles/
 
 ---
 
+## Extra
+- tumbler for thumbnails in thunar
+
+---
 ## Inspiration & References
 
 - **[saimoomedits/eww-widgets](https://github.com/Saimoomedits/eww-widgets)** — EWW bar and widgets
