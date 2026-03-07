@@ -1,3 +1,4 @@
 [Added Associations]
 text/plain=code.desktop;firefox.desktop;
 application/xml=code.desktop;
+image/png=firefox.desktop;
