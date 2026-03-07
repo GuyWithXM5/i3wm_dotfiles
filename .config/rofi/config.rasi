@@ -128,6 +128,7 @@ listview {
     text-color:                  @foreground;
     cursor:                      "default";
     border-color: 		 @background-alt;
+    padding:			 15px 0px 0px 0px;
 }
 
 /*****----- Elements -----*****/
