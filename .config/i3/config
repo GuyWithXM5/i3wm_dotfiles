@@ -250,3 +250,7 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 5%- && eww -c ~/.config/eww
 
 # flameshot
 bindsym Print exec --no-startup-id flameshot gui
+
+# xrandr: fix fehbg & eww 
+bindsym $mod+shift+p exec --no-startup-id ~/.fehbg && /usr/local/bin/eww -c ~/.config/eww/bar kill  && ~/.config/eww/bar/launch_bar 
+
