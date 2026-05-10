@@ -4,3 +4,9 @@
 .config/go
 .config/gh
 .config/dconf/user
+.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+.config/BraveSoftware
+.config/nextjs-nodejs
+.config/git
+.config/create-next-app-nodejs
+.config/dconf
