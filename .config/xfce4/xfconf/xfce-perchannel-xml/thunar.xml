@@ -13,4 +13,5 @@
   <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-column-widths" type="string" value="50,50,112,50,50,50,50,50,1422,50,50,79,50,92"/>
+  <property name="misc-thumbnail-mode" type="string" value="THUNAR_THUMBNAIL_MODE_ALWAYS"/>
 </channel>

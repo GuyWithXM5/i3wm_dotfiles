@@ -14,9 +14,9 @@
 
 (defvar eww "$HOME/.local/bin/eww/eww -c $HOME/.config/eww/bar")
 
-(defpoll COL_WLAN :interval "1m" "~/.config/eww/bar/scripts/wifi --COL")
-(defpoll WLAN_ICON :interval "1m" "~/.config/eww/bar/scripts/wifi --ICON")
-(defpoll WIFI_DETAILS :interval "1m" "~/.config/eww/bar/scripts/wifi --DETAILS")
+(defpoll COL_WLAN :interval "5s" "~/.config/eww/bar/scripts/wifi --COL")
+(defpoll WLAN_ICON :interval "5s" "~/.config/eww/bar/scripts/wifi --ICON")
+(defpoll WIFI_DETAILS :interval "5s" "~/.config/eww/bar/scripts/wifi --DETAILS")
 
 
 (defpoll song :interval "2s"  "~/.config/eww/bar/scripts/music_info --song")
