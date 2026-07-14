@@ -4,14 +4,15 @@
   <property name="last-view" type="string" value="ThunarIconView"/>
   <property name="last-icon-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_100_PERCENT"/>
   <property name="last-window-width" type="int" value="930"/>
-  <property name="last-window-height" type="int" value="984"/>
-  <property name="last-window-maximized" type="bool" value="false"/>
-  <property name="last-separator-position" type="int" value="170"/>
+  <property name="last-window-height" type="int" value="484"/>
+  <property name="last-window-maximized" type="bool" value="true"/>
+  <property name="last-separator-position" type="int" value="164"/>
   <property name="last-show-hidden" type="bool" value="true"/>
   <property name="misc-single-click" type="bool" value="false"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
-  <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,112,50,50,50,50,50,1422,50,50,79,50,92"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,112,50,50,80,50,50,380,50,50,79,50,114"/>
   <property name="misc-thumbnail-mode" type="string" value="THUNAR_THUMBNAIL_MODE_ALWAYS"/>
+  <property name="misc-volume-management" type="bool" value="true"/>
 </channel>
