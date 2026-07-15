@@ -35,7 +35,7 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | Package | Purpose |
 |---------|---------|
 | `i3` | Window manager |
-| `i3lock` | Screen lock |
+| `i3lock-color` | Screen lock (blurred wallpaper + clock + small ring) |
 | `xss-lock` | Lock screen before suspend |
 | `network-manager-applet` | System tray network manager |
 | `alacritty` | Terminal emulator |
@@ -95,12 +95,12 @@ cd ~/dotfiles
 
 ```bash
 # Core packages
-sudo pacman -S i3 i3lock xss-lock network-manager-applet alacritty rofi \
+sudo pacman -S i3 xss-lock network-manager-applet alacritty rofi \
   picom feh thunar flameshot brightnessctl pulseaudio pulseaudio-alsa jq \
   ttf-jetbrains-mono-nerd ttf-fira-sans ttf-font-awesome papirus-icon-theme adw-gtk3
 
 # From AUR
-yay -S autotiling greenclip
+yay -S autotiling greenclip i3lock-color
 
 # Optional
 sudo pacman -S pywal imagemagick btop mpd ffmpeg ffmpegthumbnailer tumbler firefox
@@ -270,6 +270,24 @@ runs `wal … -s` so it never broadcasts a palette to open terminals.
 `greenclip` runs as a daemon (started from the i3 config) and its history is
 browsed through Rofi with `Mod+c`. Select an entry to copy it back to the
 clipboard.
+
+## Lockscreen
+
+`~/.config/scripts/lock.sh` runs `i3lock-color` with the **blurred wallpaper**,
+a **clock** (time + date) and a **small magenta ring** as the password
+indicator — themed to match the desktop.
+
+- Triggered by the **power menu** (`Mod+Ctrl+q` → Lock) and automatically
+  before suspend via `xss-lock`.
+- The lock background reuses `~/.cache/blurred_wall.jpg` (produced by
+  `change_wallpaper.sh`); `lock.sh` converts it to `~/.cache/lock.png` and
+  rebuilds it whenever the wallpaper changes.
+- Tune the look via the i3lock flags in `lock.sh` (`--radius`, `--ring-width`,
+  `--*-color`, `--*-pos`, font sizes).
+
+> Note: a screen *locker* only does password entry. Avatars, Log In / power
+> buttons and user switching (as seen in display-manager themes like SDDM) are
+> not possible on a locker. The boot login screen is handled separately by **ly**.
 
 ---
 

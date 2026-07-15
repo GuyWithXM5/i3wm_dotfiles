@@ -33,7 +33,7 @@ exit_code=$?
 run_action() {
     case "$1" in
         lock)
-            i3lock -c 000000
+            ~/.config/scripts/lock.sh
             ;;
         logout)
             i3-msg exit
