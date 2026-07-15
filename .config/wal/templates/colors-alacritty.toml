@@ -1,0 +1,5 @@
+# Pywal template — ONLY the terminal background is pulled from the wallpaper.
+# The 16 ANSI colors are intentionally left out so Alacritty keeps its
+# default palette (red errors, green success, etc. stay intact).
+[colors.primary]
+background = "{background}"

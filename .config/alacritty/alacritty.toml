@@ -1,3 +1,8 @@
+# Wallpaper-adaptive background (pywal writes only [colors.primary].background).
+# ANSI palette stays default so red/green output keeps its colors.
+[general]
+import = ["~/.cache/wal/colors-alacritty.toml"]
+
 [font]
 size = 9.0
 

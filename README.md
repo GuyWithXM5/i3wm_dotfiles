@@ -18,6 +18,8 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | **Window Manager** | i3 (with gaps) |
 | **Status Bar** | EWW |
 | **App Launcher** | Rofi |
+| **Wallpaper Picker** | Rofi thumbnail grid (`Mod+w`) → pywal + feh |
+| **Clipboard Manager** | greenclip + Rofi (`Mod+c`) |
 | **Terminal** | Alacritty |
 | **Compositor** | Picom (animations, blur, rounded corners) |
 | **File Manager** | Thunar |
@@ -45,6 +47,7 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | `flameshot` | Screenshot tool |
 | `brightnessctl` | Brightness control |
 | `autotiling` | Smart window tiling (i3) |
+| `greenclip` | Clipboard history daemon (Mod+c via Rofi) |
 | `pulseaudio` / `pulseaudio-alsa` | Audio (volume scripts) |
 | `jq` | JSON parsing (eww workspace script) |
 
@@ -65,12 +68,15 @@ A minimal, modern i3-based Linux desktop configuration for Arch Linux. Features 
 | Package | Purpose |
 |---------|---------|
 | `pywal` | Generate color schemes from wallpapers |
-| `imagemagick` | Blur wallpapers for Rofi background |
+| `imagemagick` | Wallpaper picker thumbnails + blurred Rofi background |
 | `neofetch` | System info in terminal |
 | `btop` | System monitor |
 | `mpd` | Music player (for EWW music widget) |
 | `ffmpeg` | Extract album art for MPD |
+| `ffmpegthumbnailer` | Video thumbnails in Thunar |
+| `tumbler` | Thumbnail generation for Thunar |
 | `firefox` | Browser (Mod+b) |
+| `brave` | Browser (Mod+Shift+b) |
 | `code` | VS Code (Mod+z) |
 | `exo` | Thunar "Open Terminal Here" (exo-open) |
 | `ly` | Display manager (TUI login; optional alternative to SDDM/GDM) |
@@ -93,11 +99,11 @@ sudo pacman -S i3 i3lock xss-lock network-manager-applet alacritty rofi \
   picom feh thunar flameshot brightnessctl pulseaudio pulseaudio-alsa jq \
   ttf-jetbrains-mono-nerd ttf-fira-sans ttf-font-awesome papirus-icon-theme adw-gtk3
 
-# Autotiling (from AUR)
-yay -S autotiling
+# From AUR
+yay -S autotiling greenclip
 
 # Optional
-sudo pacman -S pywal imagemagick btop mpd ffmpeg firefox
+sudo pacman -S pywal imagemagick btop mpd ffmpeg ffmpegthumbnailer tumbler firefox
 ```
 
 ### 3. Run the install script (optional)
@@ -138,6 +144,9 @@ feh --bg-fill /path/to/wallpaper.jpg
 # Or use the change_wallpaper script (generates pywal colors + blurred bg)
 ~/.config/scripts/change_wallpaper.sh /path/to/wallpaper.jpg
 ```
+
+Drop images into `~/wallpaper/` (subfolders are scanned too) and pick them
+visually with the wallpaper picker — see below.
 
 ### 6. Power menu symlink
 
@@ -209,18 +218,58 @@ User-specific Ly settings go in `~/.config/ly/config.ini`. System-wide config is
 |-----|--------|
 | `Mod+Return` | Open terminal (Alacritty) |
 | `Mod+d` | Rofi app launcher |
+| `Mod+w` | Wallpaper picker (thumbnail grid) |
+| `Mod+c` | Clipboard history (greenclip + rofi) |
 | `Mod+q` | Close window |
+| `Mod+Shift+c` | Reload config |
+| `Mod+Shift+r` | Restart i3 |
 | `Mod+Shift+e` | Exit i3 |
-| `Mod+Shift+e` | Reload config |
 | `Mod+e` | Thunar file manager |
 | `Mod+b` | Firefox |
+| `Mod+Shift+b` | Brave |
 | `Mod+z` | VS Code |
 | `Mod+Ctrl+q` | Power menu |
 | `Mod+r` | Resize mode |
 | `Mod+f` | Fullscreen |
-| `Print` | Flameshot screenshot |
+| `Print` | Flameshot screenshot (GUI) |
+| `Mod+Print` | Screenshot script |
+| `Mod+PageUp` | Flameshot screenshot (GUI) |
+| `Mod+Shift+p` | Reload wallpaper + restart EWW bar |
 | `XF86Audio*` | Volume up/down/mute |
 | `XF86MonBrightness*` | Brightness |
+
+---
+
+## Wallpaper Picker
+
+A Rofi widget (`Mod+w`) — a floating grid (same look as the app drawer) of
+live thumbnail previews from `~/wallpaper/` (recursively, so you can organise
+into subfolders). Selecting one runs `change_wallpaper.sh` → pywal colors +
+blurred background + `feh --bg-fill`.
+
+- **Enter** — apply the highlighted wallpaper
+- **Alt+r** — apply a random wallpaper and close
+- **Alt+s** — shuffle: apply a random wallpaper, then reopen the picker
+- **Esc** — cancel
+- type to filter by name
+
+Thumbnails are cached under `~/.cache/wallpaper-thumbs/` (regenerated only
+when a source image changes), so launches are instant after the first run.
+Requires `imagemagick`.
+
+Files: `~/.config/rofi/scripts/wallpaper.sh`, `~/.config/rofi/wallpaper.rasi`.
+
+**Adaptive terminal background:** Alacritty imports `~/.cache/wal/colors-alacritty.toml`
+(generated from `~/.config/wal/templates/colors-alacritty.toml`), which sets
+**only** the background color from the wallpaper. The 16 ANSI colors stay at
+Alacritty's defaults, so error/success text keeps its red/green. `change_wallpaper.sh`
+runs `wal … -s` so it never broadcasts a palette to open terminals.
+
+## Clipboard Manager
+
+`greenclip` runs as a daemon (started from the i3 config) and its history is
+browsed through Rofi with `Mod+c`. Select an entry to copy it back to the
+clipboard.
 
 ---
 
@@ -232,10 +281,10 @@ dotfiles/
 ├── .config/
 │   ├── i3/config          # Main i3 config
 │   ├── eww/bar/           # EWW status bar
-│   ├── rofi/              # App launcher + power menu
+│   ├── rofi/              # App launcher, power menu, wallpaper picker
 │   ├── picom/             # Compositor
 │   ├── alacritty/         # Terminal
-│   ├── scripts/           # volume.sh, change_wallpaper.sh
+│   ├── scripts/           # volume.sh, change_wallpaper.sh, screenshot.sh
 │   ├── neofetch/
 │   ├── btop/
 │   ├── gtk-3.0/
@@ -249,7 +298,7 @@ dotfiles/
 ## Customization
 
 - **Colors:** Edit `eww.scss` for EWW or `~/.config/polybar/colors.ini` for polybar.
-- **Rofi:** Edit `~/.config/rofi/config.rasi` and `power-menu.rasi`.
+- **Rofi:** Edit `~/.config/rofi/config.rasi`, `power-menu.rasi`, and `wallpaper.rasi`.
 - **i3 gaps:** Adjust `gaps inner` and `gaps outer` in `~/.config/i3/config`.
 - **Fonts:** Alacritty uses JetBrains Mono Nerd Font; change in `alacritty.toml`.
 

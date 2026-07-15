@@ -208,6 +208,9 @@ exec --no-startup-id exec bash $HOME/.fehbg
 #power-menu script rofi
 bindsym $mod+Ctrl+q exec ~/.config/rofi/scripts/power-menu.sh
 
+#wallpaper picker rofi (thumbnail grid, Alt+r random / Alt+s shuffle inside)
+bindsym $mod+w exec --no-startup-id ~/.config/rofi/scripts/wallpaper.sh
+
 #autotiling script
 exec_always --no-startup-id autotiling
 
