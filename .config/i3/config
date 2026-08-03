@@ -251,6 +251,8 @@ gaps outer 8
  default_floating_border pixel 2
  for_window [class=".*"] border pixel 2
 
+# telegram
+bindsym $mod+n exec Telegram
 
 # vscode 
 bindsym $mod+z exec code
