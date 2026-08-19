@@ -16,10 +16,10 @@ if [ -n "$active" ]; then
 fi
 
 if [ "$state" = "connected" ] && [ -n "$essid" ]; then
-  icon=$'\ue06a'   # Nerd Font wifi
+  icon=$''   # Nerd Font wifi
   col="#a1bdce"
 else
-  icon=$'\ue10a'   # Nerd Font wifi off
+  icon=$'󰤮'   # Nerd Font wifi off
   col="#575268"
 fi
 
